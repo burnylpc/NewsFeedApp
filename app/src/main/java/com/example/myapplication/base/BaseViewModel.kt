@@ -1,8 +1,9 @@
-package com.example.myapplication.base
+package com.example.newsfeed.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.base.Event
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<VIEW_STATE> : ViewModel() {

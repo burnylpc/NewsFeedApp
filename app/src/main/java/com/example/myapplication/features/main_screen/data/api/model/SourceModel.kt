@@ -1,8 +1,8 @@
-package com.example.myapplication.data.api.model
+package com.example.myapplication.features.main_screen.data.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ApiSourceModel(
+data class SourceModel(
     @SerializedName("id")
     val id: String?,
     @SerializedName("name")
