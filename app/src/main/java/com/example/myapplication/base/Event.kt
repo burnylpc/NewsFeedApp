@@ -1,4 +1,3 @@
 package com.example.myapplication.base
 
-interface Event {
-}
+interface Event

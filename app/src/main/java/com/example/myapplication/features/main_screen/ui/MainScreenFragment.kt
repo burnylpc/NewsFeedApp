@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +18,7 @@ class MainScreenFragment:Fragment() {
 
     private val viewModel by viewModel<MainScreenViewModel>()
     private val adapter by lazy { ArticlesAdapter(listOf()) }
+    lateinit var pbLoadingView: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,17 +29,15 @@ class MainScreenFragment:Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val recyclerView =  view.findViewById<RecyclerView>(R.id.rvArticles)
-
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rvActicles)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         viewModel.viewState.observe(viewLifecycleOwner, Observer(::render))
 
     }
 
-    private fun render(viewState : ViewState) {
+    private fun render(viewState: ViewState) {
         adapter.updateArticles(viewState.articleList)
     }
 }

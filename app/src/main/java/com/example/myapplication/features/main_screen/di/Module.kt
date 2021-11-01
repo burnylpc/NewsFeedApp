@@ -1,5 +1,6 @@
 package com.example.newsfeed.features.main_screen.di
 
+import com.example.myapplication.features.bookmarks_screen.domain.BookmarkInteractor
 import com.example.newsfeed.features.main_screen.data.api.NewsApi
 import com.example.newsfeed.features.main_screen.data.api.NewsRemoteSource
 import com.example.newsfeed.features.main_screen.data.api.NewsRepo
@@ -15,11 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 //newsapi.org/v2/everything?q=bitcoin&apiKey=API_KEY
 const val BASE_URL = "https://newsapi.org/"
 
-val  mainScreenModule = module{
-    viewModel{
-        MainScreenViewModel(get <NewsInteractor>())
-    }
-
+val mainScreenModule = module {
     single<OkHttpClient> {
         OkHttpClient.Builder()
             .build()
@@ -36,14 +33,20 @@ val  mainScreenModule = module{
     single<NewsApi> {
         get<Retrofit>().create(NewsApi::class.java)
     }
+
     single<NewsRemoteSource> {
-        NewsRemoteSource(api = get<NewsApi>())
+        NewsRemoteSource(get<NewsApi>())
     }
+
     single<NewsRepo> {
         NewsRepoImpl(get<NewsRemoteSource>())
     }
 
     single<NewsInteractor> {
         NewsInteractor(get<NewsRepo>())
+    }
+
+    viewModel {
+        MainScreenViewModel(get<NewsInteractor>(), get<BookmarkInteractor>())
     }
 }
